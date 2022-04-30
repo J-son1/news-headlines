@@ -8,8 +8,6 @@ class ArticlesView {
     
     document.querySelector('#search-content-btn').addEventListener('click', () => {      
       const query = document.querySelector('#search-content-input').value;
-      console.log('query: ', query);
-
       this._loadArticles(query);
     });
   }
@@ -22,29 +20,17 @@ class ArticlesView {
     const articles = this.model.getArticles();
 
     articles.forEach(article => {
-      // console.log(article.fields.headline);    // Log headline for each article
-      
-      // Create article element
-      const articleEl = document.createElement('div');
-      articleEl.className = 'article';
-      this.mainContainerEl.append(articleEl);
+      const articleElement = this._createArticleElement();
+      this.mainContainerEl.append(articleElement);
 
-      // Create article headline link
-      const articleLinkEl = document.createElement('a');
-      articleLinkEl.href = article.webUrl;
-      articleEl.append(articleLinkEl);
-      
-      // Create article image
-      const articleImageEl = document.createElement('img');
-      articleImageEl.className = 'article-image';
-      articleImageEl.src = article.fields.thumbnail;
-      articleLinkEl.append(articleImageEl);
-      
-      // Create article headline
-      const articleHeadlineEl = document.createElement('h3');
-      articleHeadlineEl.className = 'article-headline';
-      articleHeadlineEl.innerText = article.fields.headline;
-      articleLinkEl.append(articleHeadlineEl);
+      const linkElement = this._createLinkElement(article);
+      articleElement.append(linkElement);
+
+      const imageElement = this._createImageElement(article);
+      linkElement.append(imageElement);
+
+      const headlineElement = this._createHeadlineElement(article);
+      linkElement.append(headlineElement);    
     });
   }
 
@@ -59,6 +45,32 @@ class ArticlesView {
       this._prepareArticles(articles);
       this.displayArticles();
     }, query);
+  }
+
+  _createArticleElement() {
+    const articleEl = document.createElement('div');
+    articleEl.className = 'article';
+    return articleEl;
+  }
+
+  _createLinkElement(article) {
+    const linkEl = document.createElement('a');
+    linkEl.href = article.webUrl;
+    return linkEl;
+  }
+
+  _createImageElement(article) {
+    const imageEl = document.createElement('img');
+    imageEl.className = 'article-image';
+    imageEl.src = article.fields.thumbnail;
+    return imageEl;
+  }
+
+  _createHeadlineElement(article) {
+    const headlineEl = document.createElement('h3');
+    headlineEl.className = 'article-headline';
+    headlineEl.innerText = article.fields.headline;
+    return headlineEl;
   }
 }
 
