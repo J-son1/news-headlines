@@ -67,6 +67,9 @@ I can specify a search query on the page and get articles matching this search
 ## Testing
 
 This app was built using TDD.<br>
+
+<img width="600" src="./images/news-headlines-tests.png">
+
 ### Run tests
 In the repo's root directory, run:
 1. `npm install`
